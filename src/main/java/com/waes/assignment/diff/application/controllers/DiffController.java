@@ -37,9 +37,6 @@ public class DiffController {
     public void create(@RequestBody @Valid final DiffRequestDTO diffRequestDTO,
                        @PathVariable("id") final Long id, @PathVariable("side") final String side) {
 
-        /*
-         *   using fluent interface to keep the code readable
-         */
         DiffDTO dto = new DiffDTO()
                 .withEncodedJson(diffRequestDTO.getBase64EncodedJson())
                 .withId(id)
