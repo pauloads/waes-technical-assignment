@@ -57,8 +57,8 @@ public class Diff {
     }
 
     public ContentStatus status() {
-        String leftAsJson = new String(Base64.getDecoder().decode(left.getEncodedValue()));
-        String rightAsJson = new String(Base64.getDecoder().decode(right.getEncodedValue()));
+        String leftAsJson = getLeftSideAsString();
+        String rightAsJson = getRightSideAsString();
 
         if (equalContent(leftAsJson, rightAsJson)) {
             return ContentStatus.EQUAL;
@@ -80,8 +80,8 @@ public class Diff {
     }
 
     public String positionsOfTheDifferences() {
-        byte[] left = new String(Base64.getDecoder().decode(getLeft().getEncodedValue())).getBytes();
-        byte[] right = new String(Base64.getDecoder().decode(getRight().getEncodedValue())).getBytes();
+        byte[] left = getLeftSideAsString().getBytes();
+        byte[] right = getRightSideAsString().getBytes();
 
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < right.length; i++) {
@@ -94,5 +94,13 @@ public class Diff {
 
     public boolean hasBothSides() {
         return left != null && right != null;
+    }
+
+    public String getLeftSideAsString() {
+        return new String(Base64.getDecoder().decode(left.getEncodedValue()));
+    }
+
+    public String getRightSideAsString() {
+        return new String(Base64.getDecoder().decode(right.getEncodedValue()));
     }
 }
