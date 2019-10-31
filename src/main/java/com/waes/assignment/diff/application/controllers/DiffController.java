@@ -7,6 +7,8 @@ import com.waes.assignment.diff.application.services.DiffService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,6 +61,10 @@ public class DiffController {
     @ApiOperation(value = "Provides the difference between two Base64 encoded JSON")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @ApiResponses(value = {
+            @ApiResponse(code = 422, message = "One or both sides are empty"),
+            @ApiResponse(code = 404, message = "Diff not fount")
+    })
     public DiffResponseDTO getDiff(@PathVariable("id") final Long id) {
         return diffService.getDifference(id);
     }
