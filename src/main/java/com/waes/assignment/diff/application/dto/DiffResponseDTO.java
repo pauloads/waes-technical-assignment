@@ -10,8 +10,7 @@ public class DiffResponseDTO {
 
     private String offsets;
 
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    private int lenght;
+    private Integer lenght;
 
     public String getOffsets() {
         return offsets;
@@ -21,11 +20,11 @@ public class DiffResponseDTO {
         this.offsets = offsets;
     }
 
-    public int getLenght() {
+    public Integer getLenght() {
         return lenght;
     }
 
-    public void setLenght(int lenght) {
+    public void setLenght(Integer lenght) {
         this.lenght = lenght;
     }
 

@@ -18,4 +18,8 @@ public enum Side {
         }
         return null;
     }
+
+    public String getValue() {
+        return value;
+    }
 }
