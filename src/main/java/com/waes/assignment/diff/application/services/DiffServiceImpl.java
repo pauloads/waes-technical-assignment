@@ -5,6 +5,7 @@ import com.waes.assignment.diff.application.dto.DiffResponseDTO;
 import com.waes.assignment.diff.application.enums.Side;
 import com.waes.assignment.diff.application.exception.DiffNotFoundException;
 import com.waes.assignment.diff.application.exception.InvalidDiffException;
+import com.waes.assignment.diff.domain.model.ContentStatus;
 import com.waes.assignment.diff.domain.model.Diff;
 import com.waes.assignment.diff.domain.model.LeftSide;
 import com.waes.assignment.diff.domain.model.RightSide;
@@ -69,10 +70,15 @@ public class DiffServiceImpl implements DiffService {
             throw new InvalidDiffException(ONE_OR_BOTH_SIDES_ARE_EMPTY);
         }
 
+        ContentStatus contentStatus = diff.status();
+
         DiffResponseDTO responseDTO = new DiffResponseDTO();
-        responseDTO.setOffsets(diff.positionsOfTheDifferences());
-        responseDTO.setLenght(diff.getLeft().getEncodedValue().length());
-        responseDTO.setStatus(diff.status());
+        responseDTO.setStatus(contentStatus);
+
+        if (ContentStatus.SAME_SIZE_DIFFERENT_CONTENT.equals(contentStatus)) {
+            responseDTO.setOffsets(diff.positionsOfTheDifferences());
+            responseDTO.setLenght(diff.getLeftSideAsString().length());
+        }
 
         return responseDTO;
     }
