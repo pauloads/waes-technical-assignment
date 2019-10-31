@@ -10,6 +10,7 @@ public class DiffResponseDTO {
 
     private String offsets;
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private int lenght;
 
     public String getOffsets() {
