@@ -1,11 +1,9 @@
 package com.waes.assignment.diff.application.dto;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 public class DiffRequestDTO {
 
-    @NotNull
     @NotEmpty
     private String base64EncodedJson;
 
