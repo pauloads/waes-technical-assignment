@@ -12,7 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Base64;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 public class DiffTest {
@@ -80,17 +81,55 @@ public class DiffTest {
     }
 
     @Test
-    public void should_not_throw_null_pointer_exception_when_get_status_and_one_or_both_sides_are_not_defined() {
-        fail();
-    }
-
-    @Test
     public void should_return_positions_of_differences() {
-        fail();
+        LeftSide leftSide = new LeftSide(encodedJsonA);
+        RightSide rightSide = new RightSide(encodedJsonB);
+        Diff diff = new Diff(1l);
+        diff.setLeft(leftSide);
+        diff.setRight(rightSide);
+
+        String expected = "25 52 56 103 107 153";
+        String actual = diff.positionsOfTheDifferences();
+
+        assertEquals(expected, actual);
     }
 
     @Test
     public void should_validate_if_diff_has_both_sides() {
-        fail();
+        LeftSide leftSide = new LeftSide(encodedJsonA);
+        RightSide rightSide = new RightSide(encodedJsonB);
+
+        Diff diffWithLeftSide = new Diff(1l);
+        diffWithLeftSide.setLeft(leftSide);
+
+        Diff diffWithBothSides = new Diff(1l);
+        diffWithBothSides.setLeft(leftSide);
+        diffWithBothSides.setRight(rightSide);
+
+        assertFalse(diffWithLeftSide.hasBothSides());
+
+        assertTrue(diffWithBothSides.hasBothSides());
+    }
+
+    @Test
+    public void should_return_right_side_as_string() {
+        RightSide rightSide = new RightSide(encodedJsonB);
+        Diff diff = new Diff(1l);
+        diff.setRight(rightSide);
+
+        String actual = diff.getRightSideAsString();
+
+        assertEquals(jsonB, actual);
+    }
+
+    @Test
+    public void should_return_left_side_as_string() {
+        LeftSide leftSide = new LeftSide(encodedJsonB);
+        Diff diff = new Diff(1l);
+        diff.setLeft(leftSide);
+
+        String actual = diff.getLeftSideAsString();
+
+        assertEquals(jsonB, actual);
     }
 }
