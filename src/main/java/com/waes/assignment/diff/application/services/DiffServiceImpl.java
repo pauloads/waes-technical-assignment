@@ -60,12 +60,27 @@ public class DiffServiceImpl implements DiffService {
     }
 
 
+    /**
+     * Method responsible for return the difference between the contents
+     *
+     * @param id
+     * @return DiffResponseDTO containing the differences, offsets, and content length
+     */
     @Override
     public DiffResponseDTO getDifference(Long id) {
 
+        /*
+         *  try to get the diff by id
+         */
         Diff diff = diffRepository.findById(id)
+                /*
+                 *   if it doesn't exists, throw an exception
+                 */
                 .orElseThrow(() -> new DiffNotFoundException(DIFF_NOT_FOUNT));
 
+        /*
+         *  verify if both sides was setted, if not trow exception
+         */
         if (!diff.hasBothSides()) {
             throw new InvalidDiffException(ONE_OR_BOTH_SIDES_ARE_EMPTY);
         }
@@ -75,6 +90,9 @@ public class DiffServiceImpl implements DiffService {
         DiffResponseDTO responseDTO = new DiffResponseDTO();
         responseDTO.setStatus(contentStatus);
 
+        /*
+         *  set offsets and content length only if contents are different and the same size
+         */
         if (ContentStatus.SAME_SIZE_DIFFERENT_CONTENT.equals(contentStatus)) {
             responseDTO.setOffsets(diff.positionsOfTheDifferences());
             responseDTO.setLenght(diff.getLeftSideAsString().length());

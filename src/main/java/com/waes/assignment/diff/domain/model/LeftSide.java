@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
 
+/**
+ * This class is a value object that represents the left side of the comparison
+ */
 @Embeddable
 public class LeftSide {
 
